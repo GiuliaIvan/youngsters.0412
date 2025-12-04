@@ -1,0 +1,65 @@
+'use client'
+
+import { Home, Target, PieChart, BookOpen, Trophy, User } from 'lucide-react'
+import { motion } from 'framer-motion'
+
+interface BottomNavProps {
+  activeTab: string
+  setActiveTab: (tab: string) => void
+}
+
+const tabs = [
+  { id: 'home', label: 'Home', icon: Home },
+  { id: 'goals', label: 'Goals', icon: Target },
+  { id: 'insights', label: 'Insights', icon: PieChart },
+  { id: 'learn', label: 'Learn', icon: BookOpen },
+  { id: 'rewards', label: 'Rewards', icon: Trophy },
+  { id: 'me', label: 'Me', icon: User },
+]
+
+export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-40">
+      <div className="max-w-[430px] mx-auto">
+        <div className="glass border-t border-white/30 px-2 py-2 pb-6">
+          <div className="flex justify-around items-center">
+            {tabs.map((tab) => {
+              const Icon = tab.icon
+              const isActive = activeTab === tab.id
+              
+              return (
+                <motion.button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className="flex flex-col items-center gap-1 px-3 py-1 relative"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-vipps-orange to-vipps-coral rounded-full -z-10"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                  <Icon 
+                    size={22} 
+                    className={`transition-colors ${
+                      isActive ? 'text-white' : 'text-gray-400'
+                    }`}
+                    strokeWidth={isActive ? 2.5 : 2}
+                  />
+                  <span className={`text-[10px] font-semibold transition-colors ${
+                    isActive ? 'text-vipps-orange' : 'text-gray-400'
+                  }`}>
+                    {tab.label}
+                  </span>
+                </motion.button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
+}

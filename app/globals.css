@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-nunito: 'Nunito', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-nunito);
+}
+
+body {
+  background: linear-gradient(180deg, #FFF5EE 0%, #FFFFFF 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFB996;
+  border-radius: 10px;
+}
+
+/* Mobile-first container */
+.app-container {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background: linear-gradient(180deg, #FFF5EE 0%, #FFFFFF 50%, #FFF5EE 100%);
+}
+
+/* Tab content area */
+.tab-content {
+  padding-bottom: 100px;
+  min-height: 100vh;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Card styles */
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(255, 91, 36, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 91, 36, 0.12);
+}
+
+/* Progress bar animation */
+.progress-bar {
+  transition: width 1s ease-out;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #FF5B24 0%, #FF6B9D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Confetti animation for celebrations */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+/* Streak flame animation */
+@keyframes flame {
+  0%, 100% {
+    transform: scale(1) rotate(-2deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(2deg);
+  }
+}
+
+.flame-animate {
+  animation: flame 0.5s ease-in-out infinite;
+}
+
+/* Badge shine effect */
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+.badge-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shine 3s infinite;
+}
+
+/* Vippsi glow */
+.vippsi-glow {
+  box-shadow: 0 0 30px rgba(255, 91, 36, 0.4);
+}
+
+/* Safe area padding for iOS */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+  }
+}
+
