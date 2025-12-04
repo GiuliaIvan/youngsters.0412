@@ -9,46 +9,91 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Vipps brand-inspired colors
+        // Vipps Design System Colors
+        background: {
+          primary: '#FFFFFF',
+        },
+        surface: {
+          primary: '#f7f7f7',
+        },
+        label: {
+          primary: '#000000',
+          secondary: 'rgba(60, 60, 67, 0.6)',
+          tertiary: 'rgba(60, 60, 67, 0.3)',
+          disabled: '#999999',
+        },
+        tint: {
+          primary: '#ff5b24',      // Orange - primary action
+          secondary: '#5e3dc2',    // Purple - active tab
+          tertiary: '#49367D',     // Dark purple
+          success: '#006627',      // Green
+        },
+        fill: {
+          primary: 'rgba(118, 118, 128, 0.12)',
+          success: 'rgba(8, 145, 63, 0.12)',
+        },
+        separator: {
+          primary: 'rgba(60, 60, 67, 0.29)',
+        },
+        special: {
+          floatingBar: 'rgba(255, 91, 36, 0.99)',
+          avatarUser: '#ffe5db',
+          avatarMerchant: '#e6e4ec',
+          tabActive: '#5e3dc2',
+        },
+        fixed: {
+          white: '#ffffff',
+        },
+        // Vipps brand colors
         vipps: {
-          orange: '#FF5B24',
-          coral: '#FF7B54',
-          peach: '#FFB996',
-          cream: '#FFF5EE',
-          dark: '#1A1A2E',
-          purple: '#6B5CE7',
-          teal: '#00C9B1',
-          yellow: '#FFD93D',
-          pink: '#FF6B9D',
-          blue: '#4ECDC4',
+          orange: '#ff5b24',
+          purple60: '#722AC9',
+          gray100: '#161225',
         }
+      },
+      spacing: {
+        // Primitives spacing system
+        'single': '8px',
+        'single-half': '12px',
+        'double': '16px',
+        'triple': '24px',
+        'section-gap': '24px',
+        'section-padding': '8px',
+      },
+      borderRadius: {
+        'default': '10px',
+        'floating': '40px',
+        'avatar': '999px',
       },
       fontFamily: {
-        sans: ['var(--font-nunito)', 'system-ui', 'sans-serif'],
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont', 
+          'SF Pro Text',
+          'SF Pro Display',
+          'system-ui',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif'
+        ],
       },
-      animation: {
-        'bounce-slow': 'bounce 2s infinite',
-        'pulse-glow': 'pulse-glow 2s infinite',
-        'float': 'float 3s ease-in-out infinite',
-        'wiggle': 'wiggle 1s ease-in-out infinite',
+      fontSize: {
+        '12': ['12px', { lineHeight: '16px', letterSpacing: '0' }],
+        '14': ['14px', { lineHeight: '20px', letterSpacing: '-0.15px' }],
+        '16': ['16px', { lineHeight: '18px', letterSpacing: '-0.32px' }],
+        '18': ['18px', { lineHeight: '24px', letterSpacing: '-0.45px' }],
       },
-      keyframes: {
-        'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(255, 91, 36, 0.4)' },
-          '50%': { boxShadow: '0 0 40px rgba(255, 91, 36, 0.8)' },
-        },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        'wiggle': {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
-        }
-      }
+      boxShadow: {
+        'floating': '0px 4px 16px 0px rgba(0, 0, 0, 0.2)',
+      },
+      backdropBlur: {
+        'material': '25px',
+        'chrome': '50px',
+      },
     },
   },
   plugins: [],
 }
 export default config
-

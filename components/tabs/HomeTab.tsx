@@ -43,7 +43,7 @@ export default function HomeTab() {
   }
 
   return (
-    <div className="tab-content">
+    <div className="tab-content bg-background-primary">
       <Header 
         title="Hey, Emma! 👋" 
         greeting="Welcome back"
@@ -59,26 +59,26 @@ export default function HomeTab() {
         {/* Balance Card */}
         <motion.div 
           variants={itemVariants}
-          className="card p-5 bg-gradient-to-br from-vipps-orange to-vipps-coral text-white relative overflow-hidden"
+          className="surface-card p-5 bg-tint-primary text-fixed-white relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-fixed-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-fixed-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
           
-          <p className="text-white/80 text-sm font-medium">Your Balance</p>
+          <p className="text-fixed-white/80 text-[14px] font-medium tracking-[-0.15px]">Your Balance</p>
           <motion.h2 
-            className="text-4xl font-bold mt-1"
+            className="text-[32px] font-semibold mt-1"
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 200 }}
           >
-            $124.50
+            1 192 kr
           </motion.h2>
           <div className="flex items-center gap-4 mt-4">
-            <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 transition-colors px-4 py-2 rounded-full text-sm font-semibold">
+            <button className="flex items-center gap-2 bg-fixed-white/20 hover:bg-fixed-white/30 transition-colors px-4 py-2 rounded-full text-[14px] font-medium">
               <ArrowUpRight size={16} />
               Send
             </button>
-            <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 transition-colors px-4 py-2 rounded-full text-sm font-semibold">
+            <button className="flex items-center gap-2 bg-fixed-white/20 hover:bg-fixed-white/30 transition-colors px-4 py-2 rounded-full text-[14px] font-medium">
               <ArrowDownLeft size={16} />
               Request
             </button>
@@ -88,48 +88,48 @@ export default function HomeTab() {
         {/* Streak Counter */}
         <motion.div 
           variants={itemVariants}
-          className="card p-4 flex items-center justify-between"
+          className="surface-card p-4 flex items-center justify-between"
         >
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center flame-animate">
-              <Flame size={24} className="text-white" />
+            <div className="w-12 h-12 rounded-full bg-[#FFD93D]/20 flex items-center justify-center">
+              <Flame size={24} className="text-tint-primary" />
             </div>
             <div>
-              <p className="font-bold text-vipps-dark">7 Day Streak! 🔥</p>
-              <p className="text-sm text-gray-500">You're learning every day - keep going!</p>
+              <p className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">7 Day Streak! 🔥</p>
+              <p className="text-[14px] text-label-secondary tracking-[-0.15px]">You're learning every day - keep going!</p>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-bold text-vipps-orange">+350</p>
-            <p className="text-xs text-gray-500">XP this week</p>
+            <p className="text-[20px] font-semibold text-tint-primary">+350</p>
+            <p className="text-[12px] text-label-secondary">XP this week</p>
           </div>
         </motion.div>
 
         {/* AI "Now" Module */}
         <motion.div 
           variants={itemVariants}
-          className="card p-4 border-2 border-vipps-orange/20 bg-gradient-to-r from-vipps-cream to-white"
+          className="surface-card p-4 border-2 border-tint-primary/20"
         >
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-vipps-orange to-vipps-coral flex items-center justify-center shrink-0">
-              <Zap size={20} className="text-white" />
+            <div className="w-10 h-10 rounded-full bg-tint-primary flex items-center justify-center shrink-0">
+              <Zap size={20} className="text-fixed-white" />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-vipps-orange bg-vipps-orange/10 px-2 py-0.5 rounded-full">
+                <span className="text-[12px] font-medium text-tint-primary bg-tint-primary/10 px-2 py-0.5 rounded-full">
                   Now
                 </span>
-                <Sparkles size={14} className="text-vipps-orange" />
+                <Sparkles size={14} className="text-tint-primary" />
               </div>
-              <h3 className="font-bold text-vipps-dark mt-1">Today's Challenge</h3>
-              <p className="text-sm text-gray-600 mt-0.5">
-                Save $10 today to reach your AirPods goal faster! 🎧
+              <h3 className="font-medium text-label-primary text-[16px] tracking-[-0.32px] mt-1">Today's Challenge</h3>
+              <p className="text-[14px] text-label-secondary tracking-[-0.15px] mt-0.5">
+                Save 100 kr today to reach your AirPods goal faster! 🎧
               </p>
               <div className="flex gap-2 mt-3">
-                <button className="px-4 py-2 bg-vipps-orange text-white text-sm font-semibold rounded-full hover:bg-vipps-coral transition-colors">
+                <button className="px-4 py-2 bg-tint-primary text-fixed-white text-[14px] font-medium rounded-full hover:opacity-90 transition-opacity">
                   Save Now
                 </button>
-                <button className="px-4 py-2 text-gray-500 text-sm font-medium hover:bg-gray-100 rounded-full transition-colors">
+                <button className="px-4 py-2 text-label-secondary text-[14px] font-medium hover:bg-surface-primary rounded-full transition-colors">
                   Later
                 </button>
               </div>
@@ -140,51 +140,51 @@ export default function HomeTab() {
         {/* Goals Preview */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-vipps-dark">Your Saving Goals</h3>
-            <button className="text-vipps-orange text-sm font-semibold flex items-center gap-1 hover:underline">
+            <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px]">Your Saving Goals</h3>
+            <button className="text-tint-primary text-[14px] font-medium flex items-center gap-1 hover:opacity-80">
               See all <ChevronRight size={16} />
             </button>
           </div>
           
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
             {/* Goal Card */}
-            <div className="card p-4 min-w-[180px] shrink-0">
+            <div className="surface-card p-4 min-w-[180px] shrink-0">
               <div className="text-3xl mb-2">🎧</div>
-              <h4 className="font-bold text-vipps-dark">AirPods</h4>
-              <p className="text-xs text-gray-500 mb-3">$120 / $200</p>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <h4 className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">AirPods</h4>
+              <p className="text-[12px] text-label-secondary mb-3">1 200 kr / 2 000 kr</p>
+              <div className="h-2 bg-fill-primary rounded-full overflow-hidden">
                 <motion.div 
-                  className="h-full bg-gradient-to-r from-vipps-orange to-vipps-coral rounded-full"
+                  className="h-full bg-tint-primary rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: '60%' }}
                   transition={{ duration: 1, delay: 0.5 }}
                 />
               </div>
-              <p className="text-xs text-vipps-orange font-semibold mt-2">60% complete</p>
+              <p className="text-[12px] text-tint-primary font-medium mt-2">60% complete</p>
             </div>
 
             {/* Goal Card 2 */}
-            <div className="card p-4 min-w-[180px] shrink-0">
+            <div className="surface-card p-4 min-w-[180px] shrink-0">
               <div className="text-3xl mb-2">🎮</div>
-              <h4 className="font-bold text-vipps-dark">New Game</h4>
-              <p className="text-xs text-gray-500 mb-3">$30 / $60</p>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <h4 className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">New Game</h4>
+              <p className="text-[12px] text-label-secondary mb-3">300 kr / 600 kr</p>
+              <div className="h-2 bg-fill-primary rounded-full overflow-hidden">
                 <motion.div 
-                  className="h-full bg-gradient-to-r from-vipps-purple to-vipps-pink rounded-full"
+                  className="h-full bg-tint-secondary rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: '50%' }}
                   transition={{ duration: 1, delay: 0.6 }}
                 />
               </div>
-              <p className="text-xs text-vipps-purple font-semibold mt-2">50% complete</p>
+              <p className="text-[12px] text-tint-secondary font-medium mt-2">50% complete</p>
             </div>
 
             {/* Add Goal Card */}
-            <div className="card p-4 min-w-[140px] shrink-0 flex flex-col items-center justify-center border-2 border-dashed border-gray-200 bg-gray-50/50">
-              <div className="w-12 h-12 rounded-full bg-vipps-orange/10 flex items-center justify-center mb-2">
-                <Plus size={24} className="text-vipps-orange" />
+            <div className="surface-card p-4 min-w-[140px] shrink-0 flex flex-col items-center justify-center border-2 border-dashed border-label-tertiary">
+              <div className="w-12 h-12 rounded-full bg-tint-primary/10 flex items-center justify-center mb-2">
+                <Plus size={24} className="text-tint-primary" />
               </div>
-              <p className="text-sm font-semibold text-gray-500">New Goal</p>
+              <p className="text-[14px] font-medium text-label-secondary">New Goal</p>
             </div>
           </div>
         </motion.div>
@@ -192,32 +192,34 @@ export default function HomeTab() {
         {/* Transactions */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-vipps-dark">Recent Transactions</h3>
-            <button className="text-vipps-orange text-sm font-semibold flex items-center gap-1 hover:underline">
+            <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px]">Recent Transactions</h3>
+            <button className="text-tint-primary text-[14px] font-medium flex items-center gap-1 hover:opacity-80">
               See all <ChevronRight size={16} />
             </button>
           </div>
           
-          <div className="card divide-y divide-gray-100">
+          <div className="surface-card overflow-hidden">
             {transactions.map((tx, index) => (
               <motion.div 
                 key={tx.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 + index * 0.1 }}
-                className="flex items-center justify-between p-4"
+                className={`flex items-center justify-between p-4 ${
+                  index < transactions.length - 1 ? 'separator' : ''
+                }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-xl">
+                  <div className="w-10 h-10 rounded-full bg-fill-primary flex items-center justify-center text-xl">
                     {tx.icon}
                   </div>
                   <div>
-                    <p className="font-semibold text-vipps-dark text-sm">{tx.name}</p>
-                    <p className="text-xs text-gray-400">{tx.date}</p>
+                    <p className="font-medium text-label-primary text-[14px] tracking-[-0.15px]">{tx.name}</p>
+                    <p className="text-[12px] text-label-secondary">{tx.date}</p>
                   </div>
                 </div>
-                <span className={`font-bold ${tx.amount > 0 ? 'text-green-500' : 'text-vipps-dark'}`}>
-                  {tx.amount > 0 ? '+' : ''}{tx.amount < 0 ? '-' : ''}${Math.abs(tx.amount / 10).toFixed(2)}
+                <span className={`font-medium text-[16px] tracking-[-0.32px] ${tx.amount > 0 ? 'text-tint-success' : 'text-label-primary'}`}>
+                  {tx.amount > 0 ? '+' : ''}{tx.amount} kr
                 </span>
               </motion.div>
             ))}
@@ -227,8 +229,8 @@ export default function HomeTab() {
         {/* Learn Preview */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-vipps-dark">Continue Learning</h3>
-            <button className="text-vipps-orange text-sm font-semibold flex items-center gap-1 hover:underline">
+            <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px]">Continue Learning</h3>
+            <button className="text-tint-primary text-[14px] font-medium flex items-center gap-1 hover:opacity-80">
               All lessons <ChevronRight size={16} />
             </button>
           </div>
@@ -240,28 +242,28 @@ export default function HomeTab() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 + index * 0.1 }}
-                className={`card p-4 min-w-[160px] shrink-0 ${
-                  lesson.progress === 100 ? 'bg-green-50 border-2 border-green-200' : ''
+                className={`surface-card p-4 min-w-[160px] shrink-0 ${
+                  lesson.progress === 100 ? 'border-2 border-tint-success/30' : ''
                 }`}
               >
                 <div className="text-3xl mb-2">{lesson.emoji}</div>
-                <h4 className="font-bold text-vipps-dark text-sm">{lesson.title}</h4>
-                <p className="text-xs text-gray-500">{lesson.duration} • +{lesson.xp} XP</p>
+                <h4 className="font-medium text-label-primary text-[14px] tracking-[-0.15px]">{lesson.title}</h4>
+                <p className="text-[12px] text-label-secondary">{lesson.duration} • +{lesson.xp} XP</p>
                 {lesson.progress === 100 ? (
-                  <span className="inline-block mt-2 text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">
+                  <span className="inline-block mt-2 text-[12px] font-medium text-tint-success bg-fill-success px-2 py-1 rounded-full">
                     ✓ Completed
                   </span>
                 ) : lesson.progress > 0 ? (
                   <div className="mt-2">
-                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-fill-primary rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-vipps-orange rounded-full"
+                        className="h-full bg-tint-primary rounded-full"
                         style={{ width: `${lesson.progress}%` }}
                       />
                     </div>
                   </div>
                 ) : (
-                  <span className="inline-block mt-2 text-xs font-semibold text-gray-400">
+                  <span className="inline-block mt-2 text-[12px] font-medium text-label-disabled">
                     Start →
                   </span>
                 )}

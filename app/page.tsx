@@ -35,7 +35,7 @@ export default function Home() {
   const ActiveTabComponent = tabs[activeTab as keyof typeof tabs]
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen bg-background-primary">
       <AnimatePresence mode="wait">
         <motion.div
           key={activeTab}

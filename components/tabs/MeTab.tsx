@@ -1,316 +1,151 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { 
   User, 
-  Palette, 
-  Users, 
-  Settings, 
+  Bell, 
+  Shield, 
   HelpCircle, 
-  Shield,
-  ChevronRight,
-  Bell,
+  ChevronRight, 
+  Star,
+  Settings,
+  LogOut,
   Moon,
-  Volume2,
-  Eye,
-  ExternalLink,
-  X,
-  Sparkles,
-  Heart
+  Globe
 } from 'lucide-react'
 import Header from '../Header'
 
-interface MenuItem {
-  id: string
-  icon: any
-  label: string
-  description?: string
-  value?: string
-  hasToggle?: boolean
-  toggleValue?: boolean
-}
+const stats = [
+  { label: 'Total Saved', value: '3 450 kr', emoji: '💰' },
+  { label: 'Goals Completed', value: '5', emoji: '🎯' },
+  { label: 'XP Earned', value: '1 250', emoji: '⭐' },
+  { label: 'Current Streak', value: '7 days', emoji: '🔥' },
+]
 
-const menuSections = [
-  {
-    title: 'Profile',
-    items: [
-      { id: 'profile', icon: User, label: 'My Profile', description: 'View and edit your profile' },
-      { id: 'avatar', icon: Palette, label: 'Customize Vippsi', description: 'Change the mascot appearance' },
-    ]
-  },
-  {
-    title: 'Family',
-    items: [
-      { id: 'family', icon: Users, label: 'Family Connection', description: 'Connected to: Mom, Dad' },
-    ]
-  },
-  {
-    title: 'Settings',
-    items: [
-      { id: 'notifications', icon: Bell, label: 'Notifications', hasToggle: true, toggleValue: true },
-      { id: 'sound', icon: Volume2, label: 'Sounds', hasToggle: true, toggleValue: true },
-      { id: 'darkmode', icon: Moon, label: 'Dark Mode', hasToggle: true, toggleValue: false },
-    ]
-  },
-  {
-    title: 'About Vippsi',
-    items: [
-      { id: 'ai', icon: Eye, label: 'How Vippsi Works', description: 'AI transparency' },
-      { id: 'help', icon: HelpCircle, label: 'Help & Support' },
-      { id: 'privacy', icon: Shield, label: 'Privacy' },
-    ]
-  },
+const menuItems = [
+  { id: 'profile', icon: User, label: 'Edit Profile', color: 'text-tint-primary' },
+  { id: 'notifications', icon: Bell, label: 'Notifications', color: 'text-tint-secondary' },
+  { id: 'privacy', icon: Shield, label: 'Privacy & Security', color: 'text-tint-success' },
+  { id: 'language', icon: Globe, label: 'Language', color: 'text-[#4ECDC4]' },
+  { id: 'theme', icon: Moon, label: 'Appearance', color: 'text-tint-tertiary' },
+  { id: 'help', icon: HelpCircle, label: 'Help & Support', color: 'text-label-secondary' },
 ]
 
 export default function MeTab() {
-  const [showAIModal, setShowAIModal] = useState(false)
-  const [toggleStates, setToggleStates] = useState({
-    notifications: true,
-    sound: true,
-    darkmode: false,
-  })
-
-  const handleToggle = (id: string) => {
-    setToggleStates(prev => ({
-      ...prev,
-      [id]: !prev[id as keyof typeof prev]
-    }))
-  }
-
   return (
-    <div className="tab-content">
-      <Header title="Me 👤" />
+    <div className="tab-content bg-background-primary">
+      <Header title="Profile" showSettings={true} />
       
       <div className="p-4 space-y-5">
         {/* Profile Card */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="card p-5 flex items-center gap-4"
+          className="surface-card p-6 flex flex-col items-center"
         >
           <div className="relative">
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-vipps-orange to-vipps-coral flex items-center justify-center text-3xl font-bold text-white">
-              E
+            <div className="w-24 h-24 rounded-full bg-special-avatarUser flex items-center justify-center border-4 border-tint-primary/20">
+              <span className="text-[36px] font-semibold text-tint-primary">ES</span>
             </div>
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-green-500 border-2 border-white flex items-center justify-center">
-              <span className="text-white text-xs">✓</span>
+            <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-tint-secondary rounded-full flex items-center justify-center border-2 border-background-primary">
+              <Star size={16} className="text-fixed-white" />
             </div>
           </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold text-vipps-dark">Emma</h2>
-            <p className="text-sm text-gray-500">13 years old • New York</p>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="px-2 py-1 bg-vipps-cream text-vipps-orange text-xs font-semibold rounded-full">
-                🔥 7 day streak
-              </span>
-              <span className="px-2 py-1 bg-purple-100 text-vipps-purple text-xs font-semibold rounded-full">
-                ⚡ 1250 XP
-              </span>
-            </div>
+          <h2 className="mt-4 text-[20px] font-semibold text-label-primary">Emma Steen</h2>
+          <p className="text-[14px] text-label-secondary">Level 5 • Money Explorer</p>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="px-3 py-1 bg-tint-primary/10 text-tint-primary text-[12px] font-medium rounded-full">
+              🔥 7 day streak
+            </span>
+            <span className="px-3 py-1 bg-tint-secondary/10 text-tint-secondary text-[12px] font-medium rounded-full">
+              ⭐ 1250 XP
+            </span>
           </div>
         </motion.div>
 
-        {/* Vippsi Preview */}
+        {/* Stats Grid */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="card p-5 bg-gradient-to-r from-vipps-cream to-orange-50"
+          className="grid grid-cols-2 gap-3"
         >
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-vipps-orange to-vipps-coral flex items-center justify-center shadow-lg">
-                <div className="relative w-10 h-10">
-                  <div className="absolute top-3 left-1 w-2 h-2 bg-white rounded-full" />
-                  <div className="absolute top-3 right-1 w-2 h-2 bg-white rounded-full" />
-                  <div className="absolute top-3.5 left-1.5 w-1.5 h-1.5 bg-vipps-dark rounded-full" />
-                  <div className="absolute top-3.5 right-1.5 w-1.5 h-1.5 bg-vipps-dark rounded-full" />
-                  <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-4 h-2 border-b-2 border-white rounded-b-full" />
+          {stats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 + index * 0.05 }}
+              className="surface-card p-4 text-center"
+            >
+              <span className="text-2xl">{stat.emoji}</span>
+              <p className="text-[18px] font-semibold text-label-primary mt-1">{stat.value}</p>
+              <p className="text-[12px] text-label-secondary">{stat.label}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Menu Items */}
+        <div className="surface-card overflow-hidden">
+          {menuItems.map((item, index) => {
+            const Icon = item.icon
+            return (
+              <motion.button
+                key={item.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 + index * 0.05 }}
+                className={`w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors ${
+                  index < menuItems.length - 1 ? 'separator' : ''
+                }`}
+              >
+                <div className={`w-10 h-10 rounded-full bg-fill-primary flex items-center justify-center`}>
+                  <Icon size={20} className={item.color} />
                 </div>
-              </div>
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-xl">👑</div>
+                <span className="flex-1 text-left text-[16px] font-medium text-label-primary tracking-[-0.32px]">
+                  {item.label}
+                </span>
+                <ChevronRight size={20} className="text-label-tertiary" />
+              </motion.button>
+            )
+          })}
+        </div>
+
+        {/* Parent Controls */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="surface-card p-4"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-tint-secondary/20 flex items-center justify-center">
+              <Shield size={24} className="text-tint-secondary" />
             </div>
             <div className="flex-1">
-              <h3 className="font-bold text-vipps-dark">Your Vippsi</h3>
-              <p className="text-sm text-gray-600">Equipped: Crown, Sunglasses</p>
-              <button className="mt-2 text-vipps-orange text-sm font-semibold flex items-center gap-1">
-                Customize <ChevronRight size={14} />
-              </button>
+              <h3 className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">Parent Dashboard</h3>
+              <p className="text-[14px] text-label-secondary">View and manage parental controls</p>
             </div>
+            <ChevronRight size={20} className="text-label-tertiary" />
           </div>
         </motion.div>
 
-        {/* Menu Sections */}
-        {menuSections.map((section, sectionIndex) => (
-          <motion.div
-            key={section.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 + sectionIndex * 0.05 }}
-          >
-            <h3 className="font-semibold text-gray-500 text-sm mb-2 px-1">{section.title}</h3>
-            <div className="card divide-y divide-gray-100">
-              {section.items.map((item) => {
-                const Icon = item.icon
-                const isToggle = item.hasToggle
-                const isAI = item.id === 'ai'
-                
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      if (isToggle) {
-                        handleToggle(item.id)
-                      } else if (isAI) {
-                        setShowAIModal(true)
-                      }
-                    }}
-                    className="w-full p-4 flex items-center gap-4 text-left hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
-                      <Icon size={20} className="text-gray-600" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-vipps-dark">{item.label}</p>
-                      {item.description && (
-                        <p className="text-xs text-gray-500">{item.description}</p>
-                      )}
-                    </div>
-                    {isToggle ? (
-                      <div className={`w-12 h-7 rounded-full p-1 transition-colors ${
-                        toggleStates[item.id as keyof typeof toggleStates] 
-                          ? 'bg-vipps-orange' 
-                          : 'bg-gray-200'
-                      }`}>
-                        <motion.div
-                          className="w-5 h-5 rounded-full bg-white shadow"
-                          animate={{
-                            x: toggleStates[item.id as keyof typeof toggleStates] ? 20 : 0
-                          }}
-                          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                        />
-                      </div>
-                    ) : (
-                      <ChevronRight size={20} className="text-gray-400" />
-                    )}
-                  </button>
-                )
-              })}
-            </div>
-          </motion.div>
-        ))}
+        {/* Sign Out */}
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="w-full surface-card p-4 flex items-center justify-center gap-2 text-[#FF6B6B] hover:bg-red-50 transition-colors"
+        >
+          <LogOut size={20} />
+          <span className="font-medium text-[16px]">Sign Out</span>
+        </motion.button>
 
         {/* App Version */}
-        <div className="text-center py-4">
-          <p className="text-xs text-gray-400">Vipps U15 Prototype v0.1.0</p>
-          <p className="text-xs text-gray-400">Made with ❤️ for young savers</p>
-        </div>
+        <p className="text-center text-[12px] text-label-disabled py-4">
+          Vipps Youngster v1.0.0
+        </p>
       </div>
-
-      {/* AI Transparency Modal */}
-      <AnimatePresence>
-        {showAIModal && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50"
-              onClick={() => setShowAIModal(false)}
-            />
-            <motion.div
-              initial={{ y: '100%' }}
-              animate={{ y: 0 }}
-              exit={{ y: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-50 max-w-[430px] mx-auto"
-            >
-              <div className="bg-white rounded-t-3xl shadow-2xl p-6 max-h-[80vh] overflow-y-auto">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-vipps-purple to-vipps-pink flex items-center justify-center">
-                      <Eye size={24} className="text-white" />
-                    </div>
-                    <h2 className="text-xl font-bold text-vipps-dark">How Vippsi Works</h2>
-                  </div>
-                  <button 
-                    onClick={() => setShowAIModal(false)}
-                    className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"
-                  >
-                    <X size={18} className="text-gray-500" />
-                  </button>
-                </div>
-
-                {/* Content */}
-                <div className="space-y-4">
-                  <div className="bg-vipps-cream/50 rounded-2xl p-4">
-                    <div className="flex items-start gap-3">
-                      <Sparkles className="text-vipps-orange shrink-0 mt-1" size={20} />
-                      <div>
-                        <h3 className="font-bold text-vipps-dark">What is Vippsi?</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Vippsi is an AI-powered friend that helps you understand money better. 
-                          Vippsi learns from how you use the app to give you personalized tips!
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-blue-50 rounded-2xl p-4">
-                    <div className="flex items-start gap-3">
-                      <Shield className="text-blue-500 shrink-0 mt-1" size={20} />
-                      <div>
-                        <h3 className="font-bold text-vipps-dark">Your Data is Safe</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          We never share your data with others. Everything Vippsi learns 
-                          is only used to help you - nobody else.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-green-50 rounded-2xl p-4">
-                    <div className="flex items-start gap-3">
-                      <Users className="text-green-500 shrink-0 mt-1" size={20} />
-                      <div>
-                        <h3 className="font-bold text-vipps-dark">Parents Can See</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Your parents can see your progress and help you. 
-                          They cannot see private conversations with Vippsi.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-purple-50 rounded-2xl p-4">
-                    <div className="flex items-start gap-3">
-                      <Heart className="text-purple-500 shrink-0 mt-1" size={20} />
-                      <div>
-                        <h3 className="font-bold text-vipps-dark">Made for You</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Vippsi is designed especially for young people aged 12-14. 
-                          All content is appropriate for your age.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 p-4 bg-gray-50 rounded-2xl">
-                  <p className="text-sm text-gray-500 text-center">
-                    Have questions? Talk to an adult or contact us!
-                  </p>
-                  <button className="w-full mt-3 py-3 border-2 border-vipps-orange text-vipps-orange font-semibold rounded-xl hover:bg-vipps-cream transition-colors flex items-center justify-center gap-2">
-                    <HelpCircle size={18} />
-                    Contact Support
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

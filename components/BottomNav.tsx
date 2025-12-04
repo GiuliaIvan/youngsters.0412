@@ -20,8 +20,8 @@ const tabs = [
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40">
-      <div className="max-w-[430px] mx-auto">
-        <div className="glass border-t border-white/30 px-2 py-2 pb-6">
+      <div className="max-w-[402px] mx-auto">
+        <div className="tab-bar-material border-t border-separator-primary px-2 py-2 pb-6">
           <div className="flex justify-around items-center">
             {tabs.map((tab) => {
               const Icon = tab.icon
@@ -31,26 +31,26 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className="flex flex-col items-center gap-1 px-3 py-1 relative"
+                  className="flex flex-col items-center gap-1 px-2 py-1 relative"
                   whileTap={{ scale: 0.9 }}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-vipps-orange to-vipps-coral rounded-full -z-10"
+                      className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-10 bg-tint-primary rounded-full -z-10"
                       initial={false}
                       transition={{ type: "spring", stiffness: 500, damping: 30 }}
                     />
                   )}
                   <Icon 
-                    size={22} 
+                    size={20} 
                     className={`transition-colors ${
-                      isActive ? 'text-white' : 'text-gray-400'
+                      isActive ? 'text-fixed-white' : 'text-label-disabled'
                     }`}
                     strokeWidth={isActive ? 2.5 : 2}
                   />
-                  <span className={`text-[10px] font-semibold transition-colors ${
-                    isActive ? 'text-vipps-orange' : 'text-gray-400'
+                  <span className={`text-[10px] font-medium transition-colors ${
+                    isActive ? 'text-tint-primary' : 'text-label-disabled'
                   }`}>
                     {tab.label}
                   </span>
