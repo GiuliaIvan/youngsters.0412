@@ -64,7 +64,7 @@ export default function Vippsi({ context = 'home', tip }: VippsiProps) {
           setIsHappy(true)
           setTimeout(() => setIsHappy(false), 1000)
         }}
-        className="fixed bottom-24 right-4 z-50 w-16 h-16 rounded-full bg-tint-primary shadow-floating flex items-center justify-center"
+        className="fixed bottom-24 right-4 z-50 w-16 h-16 rounded-full shadow-floating flex items-center justify-center overflow-hidden bg-white border-2 border-tint-primary/20"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         animate={{ 
@@ -78,33 +78,19 @@ export default function Vippsi({ context = 'home', tip }: VippsiProps) {
           }
         }}
       >
-        {/* Vippsi Face */}
-        <div className="relative w-12 h-12">
-          {/* Eyes */}
-          <motion.div 
-            className="absolute top-3 left-2 w-2.5 h-2.5 bg-fixed-white rounded-full"
-            animate={isHappy ? { scaleY: 0.3 } : { scaleY: 1 }}
-          />
-          <motion.div 
-            className="absolute top-3 right-2 w-2.5 h-2.5 bg-fixed-white rounded-full"
-            animate={isHappy ? { scaleY: 0.3 } : { scaleY: 1 }}
-          />
-          {/* Pupils */}
-          <div className="absolute top-3.5 left-2.5 w-1.5 h-1.5 bg-label-primary rounded-full" />
-          <div className="absolute top-3.5 right-2.5 w-1.5 h-1.5 bg-label-primary rounded-full" />
-          {/* Mouth */}
-          <motion.div 
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 w-4 h-2 border-b-2 border-fixed-white rounded-b-full"
-            animate={isHappy ? { scaleY: 1.5, scaleX: 1.2 } : { scaleY: 1, scaleX: 1 }}
-          />
-          {/* Sparkle */}
-          <motion.div
-            className="absolute -top-1 -right-1"
-            animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            <Sparkles size={12} className="text-[#FFD93D]" />
-          </motion.div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/Vippsi.png"
+          alt="Vippsi"
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Fallback to emoji if image not found
+            e.currentTarget.style.display = 'none';
+            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+          }}
+        />
+        <div className="hidden w-full h-full bg-tint-primary rounded-full flex items-center justify-center">
+          <span className="text-2xl">🧡</span>
         </div>
       </motion.button>
 
@@ -133,13 +119,14 @@ export default function Vippsi({ context = 'home', tip }: VippsiProps) {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    {/* Mini Vippsi */}
-                    <div className="w-12 h-12 rounded-full bg-tint-primary flex items-center justify-center">
-                      <div className="relative w-8 h-8">
-                        <div className="absolute top-2 left-1 w-1.5 h-1.5 bg-fixed-white rounded-full" />
-                        <div className="absolute top-2 right-1 w-1.5 h-1.5 bg-fixed-white rounded-full" />
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-3 h-1.5 border-b-2 border-fixed-white rounded-b-full" />
-                      </div>
+                    {/* Mini Vippsi with image */}
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-white shadow-sm border border-tint-primary/20">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="/Vippsi.png"
+                        alt="Vippsi"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <h2 className="font-semibold text-[18px] text-label-primary">Hey! I'm Vippsi 👋</h2>
