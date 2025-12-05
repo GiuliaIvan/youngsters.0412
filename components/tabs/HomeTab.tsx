@@ -59,7 +59,7 @@ export default function HomeTab() {
         {/* Balance Card */}
         <motion.div 
           variants={itemVariants}
-          className="surface-card p-5 bg-tint-primary text-fixed-white relative overflow-hidden"
+          className="rounded-default p-5 bg-tint-primary text-fixed-white relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-fixed-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-fixed-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />

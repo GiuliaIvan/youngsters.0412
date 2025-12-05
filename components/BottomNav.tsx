@@ -34,18 +34,10 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
                   className="flex flex-col items-center gap-1 px-2 py-1 relative"
                   whileTap={{ scale: 0.9 }}
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-10 bg-tint-primary rounded-full -z-10"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    />
-                  )}
                   <Icon 
                     size={20} 
                     className={`transition-colors ${
-                      isActive ? 'text-fixed-white' : 'text-label-disabled'
+                      isActive ? 'text-tint-primary' : 'text-label-disabled'
                     }`}
                     strokeWidth={isActive ? 2.5 : 2}
                   />

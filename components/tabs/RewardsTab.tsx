@@ -41,7 +41,7 @@ export default function RewardsTab() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="surface-card p-5 bg-tint-secondary text-fixed-white relative overflow-hidden"
+          className="rounded-default p-5 bg-tint-primary text-fixed-white relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-fixed-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
           
