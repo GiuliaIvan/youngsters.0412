@@ -11,9 +11,11 @@ import {
   Settings,
   LogOut,
   Moon,
-  Globe
+  Globe,
+  Heart
 } from 'lucide-react'
 import Header from '../Header'
+import SharedWithFamilySection from '../share/SharedWithFamilySection'
 
 const stats = [
   { label: 'Total Saved', value: '3 450 kr', emoji: '💰' },
@@ -83,6 +85,15 @@ export default function MeTab() {
               <p className="text-[12px] text-label-secondary">{stat.label}</p>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Shared With Family Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+        >
+          <SharedWithFamilySection />
         </motion.div>
 
         {/* Menu Items */}

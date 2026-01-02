@@ -18,9 +18,13 @@ import {
   Target,
   Zap,
   Star,
-  Heart
+  Heart,
+  Coins,
+  Share2
 } from 'lucide-react'
 import Header from '../Header'
+import ChoresEarnSection from '../earn/ChoresEarnSection'
+import ShareAchievementModal, { Achievement } from '../share/ShareAchievementModal'
 
 interface Goal {
   id: number
@@ -131,6 +135,11 @@ const completedGoals: Goal[] = [
 export default function GoalsTab() {
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [showNewGoal, setShowNewGoal] = useState(false)
+  const [activeSection, setActiveSection] = useState<'goals' | 'earn'>('goals')
+  
+  // Share Achievement State
+  const [showShareModal, setShowShareModal] = useState(false)
+  const [achievementToShare, setAchievementToShare] = useState<Achievement | null>(null)
   
   // New Goal Wizard State
   const [wizardStep, setWizardStep] = useState(1)
@@ -202,149 +211,224 @@ export default function GoalsTab() {
     // In a real app, you'd add the goal to state/database
   }
 
+  // Handle sharing a completed goal
+  const handleShareGoal = (goal: Goal) => {
+    const achievement: Achievement = {
+      id: goal.id,
+      type: 'goal_completed',
+      title: goal.name,
+      description: `Saved ${goal.target} kr`,
+      emoji: goal.emoji,
+      xp: 100,
+      date: 'Today',
+      details: goal.motivation
+    }
+    setAchievementToShare(achievement)
+    setShowShareModal(true)
+  }
+
+  const handleShareSubmit = (achievement: Achievement) => {
+    console.log('Shared achievement:', achievement)
+    // In a real app, this would send to the family feed
+  }
+
   return (
     <div className="tab-content bg-background-primary">
-      <Header title="Saving Goals 🎯" showSettings={true} />
+      <Header title="Goals & Earn 🎯" showSettings={true} />
       
       <div className="p-4 space-y-5">
-        {/* Quick Stats */}
+        {/* Section Tabs: Goals / Earn */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="grid grid-cols-2 gap-3"
+          className="surface-card p-1.5 flex gap-1"
         >
-          <div className="surface-card p-4">
-            <p className="text-[12px] text-label-secondary font-medium">Total Saved</p>
-            <p className="text-[24px] font-semibold text-label-primary">1 580 kr</p>
-            <div className="flex items-center gap-1 mt-1">
-              <TrendingUp size={14} className="text-tint-success" />
-              <span className="text-[12px] text-tint-success font-medium">+200 kr this week</span>
-            </div>
-          </div>
-          <div className="surface-card p-4">
-            <p className="text-[12px] text-label-secondary font-medium">Active Goals</p>
-            <p className="text-[24px] font-semibold text-label-primary">{activeGoals.length}</p>
-            <div className="flex items-center gap-1 mt-1">
-              <Sparkles size={14} className="text-tint-secondary" />
-              <span className="text-[12px] text-tint-secondary font-medium">{completedGoals.length} completed</span>
-            </div>
-          </div>
+          <button
+            onClick={() => setActiveSection('goals')}
+            className={`flex-1 py-3 rounded-[8px] font-medium text-[15px] flex items-center justify-center gap-2 transition-all ${
+              activeSection === 'goals'
+                ? 'bg-tint-primary text-fixed-white shadow-sm'
+                : 'text-label-secondary hover:bg-fill-primary'
+            }`}
+          >
+            <Target size={18} />
+            My Goals
+          </button>
+          <button
+            onClick={() => setActiveSection('earn')}
+            className={`flex-1 py-3 rounded-[8px] font-medium text-[15px] flex items-center justify-center gap-2 transition-all ${
+              activeSection === 'earn'
+                ? 'bg-tint-success text-fixed-white shadow-sm'
+                : 'text-label-secondary hover:bg-fill-primary'
+            }`}
+          >
+            <Coins size={18} />
+            Earn
+          </button>
         </motion.div>
 
-        {/* Vippsi Tip */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="surface-card p-4 border-2 border-[#FFD93D]/30"
-        >
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-tint-primary flex items-center justify-center shrink-0">
-              <span className="text-lg">💡</span>
-            </div>
-            <div>
-              <p className="font-medium text-label-primary text-[14px] tracking-[-0.15px]">Vippsi Tip!</p>
-              <p className="text-[14px] text-label-secondary tracking-[-0.15px] mt-0.5">
-                Save 100 kr today to stay on track with your AirPods goal! You're 60% there 🚀
-              </p>
-            </div>
-          </div>
-        </motion.div>
+        {/* Earn Section */}
+        <AnimatePresence mode="wait">
+          {activeSection === 'earn' && (
+            <motion.div
+              key="earn"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+            >
+              <ChoresEarnSection />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Active Goals */}
-        <div>
-          <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px] mb-3">Active Goals</h3>
-          <div className="space-y-3">
-            {activeGoals.map((goal, index) => {
-              const progress = (goal.current / goal.target) * 100
-              return (
-                <motion.div
-                  key={goal.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + index * 0.1 }}
-                  className="surface-card p-4 cursor-pointer hover:bg-gray-100 transition-colors"
-                  onClick={() => setSelectedGoal(goal)}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="text-4xl">{goal.emoji}</div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">{goal.name}</h4>
-                        <ChevronRight size={20} className="text-label-tertiary" />
-                      </div>
-                      <p className="text-[14px] text-label-secondary tracking-[-0.15px] mt-0.5">
-                        {goal.current} kr / {goal.target} kr
-                      </p>
-                      <div className="mt-3 h-3 bg-fill-primary rounded-full overflow-hidden">
-                        <motion.div
-                          className={`h-full rounded-full ${goal.color}`}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${progress}%` }}
-                          transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-[14px] font-medium text-tint-primary">
-                          {Math.round(progress)}% complete
-                        </span>
-                        {goal.deadline && (
-                          <span className="text-[12px] text-label-secondary flex items-center gap-1">
-                            <Clock size={12} />
-                            {goal.deadline}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Add New Goal Button */}
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          onClick={openNewGoalWizard}
-          className="w-full surface-card p-4 flex items-center justify-center gap-3 border-2 border-dashed border-tint-primary/30 hover:bg-tint-primary/5 transition-colors"
-        >
-          <div className="w-10 h-10 rounded-full bg-tint-primary/10 flex items-center justify-center">
-            <Plus size={24} className="text-tint-primary" />
-          </div>
-          <span className="font-medium text-tint-primary text-[16px]">Add New Goal</span>
-        </motion.button>
-
-        {/* Completed Goals */}
-        <div>
-          <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px] mb-3 flex items-center gap-2">
-            Completed Goals <Check size={18} className="text-tint-success" />
-          </h3>
-          <div className="space-y-3">
-            {completedGoals.map((goal, index) => (
-              <motion.div
-                key={goal.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
-                className="surface-card p-4 border-2 border-tint-success/20"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="text-3xl">{goal.emoji}</div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">{goal.name}</h4>
-                    <p className="text-[14px] text-label-secondary">{goal.target} kr saved</p>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-tint-success flex items-center justify-center">
-                    <Check size={18} className="text-fixed-white" />
+        {/* Goals Section */}
+        <AnimatePresence mode="wait">
+          {activeSection === 'goals' && (
+            <motion.div
+              key="goals"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="space-y-5"
+            >
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="surface-card p-4">
+                  <p className="text-[12px] text-label-secondary font-medium">Total Saved</p>
+                  <p className="text-[24px] font-semibold text-label-primary">1 580 kr</p>
+                  <div className="flex items-center gap-1 mt-1">
+                    <TrendingUp size={14} className="text-tint-success" />
+                    <span className="text-[12px] text-tint-success font-medium">+200 kr this week</span>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+                <div className="surface-card p-4">
+                  <p className="text-[12px] text-label-secondary font-medium">Active Goals</p>
+                  <p className="text-[24px] font-semibold text-label-primary">{activeGoals.length}</p>
+                  <div className="flex items-center gap-1 mt-1">
+                    <Sparkles size={14} className="text-tint-secondary" />
+                    <span className="text-[12px] text-tint-secondary font-medium">{completedGoals.length} completed</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Vippsi Tip */}
+              <div className="surface-card p-4 border-2 border-[#FFD93D]/30">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-tint-primary flex items-center justify-center shrink-0">
+                    <span className="text-lg">💡</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-label-primary text-[14px] tracking-[-0.15px]">Vippsi Tip!</p>
+                    <p className="text-[14px] text-label-secondary tracking-[-0.15px] mt-0.5">
+                      Complete a chore to fund your AirPods goal faster! Check the Earn tab 💪
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Active Goals */}
+              <div>
+                <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px] mb-3">Active Goals</h3>
+                <div className="space-y-3">
+                  {activeGoals.map((goal, index) => {
+                    const progress = (goal.current / goal.target) * 100
+                    return (
+                      <motion.div
+                        key={goal.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.1 }}
+                        className="surface-card p-4 cursor-pointer hover:bg-gray-100 transition-colors"
+                        onClick={() => setSelectedGoal(goal)}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="text-4xl">{goal.emoji}</div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <h4 className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">{goal.name}</h4>
+                              <ChevronRight size={20} className="text-label-tertiary" />
+                            </div>
+                            <p className="text-[14px] text-label-secondary tracking-[-0.15px] mt-0.5">
+                              {goal.current} kr / {goal.target} kr
+                            </p>
+                            <div className="mt-3 h-3 bg-fill-primary rounded-full overflow-hidden">
+                              <motion.div
+                                className={`h-full rounded-full ${goal.color}`}
+                                initial={{ width: 0 }}
+                                animate={{ width: `${progress}%` }}
+                                transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
+                              />
+                            </div>
+                            <div className="flex items-center justify-between mt-2">
+                              <span className="text-[14px] font-medium text-tint-primary">
+                                {Math.round(progress)}% complete
+                              </span>
+                              {goal.deadline && (
+                                <span className="text-[12px] text-label-secondary flex items-center gap-1">
+                                  <Clock size={12} />
+                                  {goal.deadline}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Add New Goal Button */}
+              <button
+                onClick={openNewGoalWizard}
+                className="w-full surface-card p-4 flex items-center justify-center gap-3 border-2 border-dashed border-tint-primary/30 hover:bg-tint-primary/5 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-full bg-tint-primary/10 flex items-center justify-center">
+                  <Plus size={24} className="text-tint-primary" />
+                </div>
+                <span className="font-medium text-tint-primary text-[16px]">Add New Goal</span>
+              </button>
+
+              {/* Completed Goals */}
+              <div>
+                <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px] mb-3 flex items-center gap-2">
+                  Completed Goals <Check size={18} className="text-tint-success" />
+                </h3>
+                <div className="space-y-3">
+                  {completedGoals.map((goal, index) => (
+                    <motion.div
+                      key={goal.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 + index * 0.1 }}
+                      className="surface-card p-4 border-2 border-tint-success/20"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="text-3xl">{goal.emoji}</div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-label-primary text-[16px] tracking-[-0.32px]">{goal.name}</h4>
+                          <p className="text-[14px] text-label-secondary">{goal.target} kr saved</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleShareGoal(goal)}
+                            className="w-8 h-8 rounded-full bg-tint-primary/10 flex items-center justify-center hover:bg-tint-primary/20 transition-colors"
+                            title="Share with family"
+                          >
+                            <Share2 size={16} className="text-tint-primary" />
+                          </button>
+                          <div className="w-8 h-8 rounded-full bg-tint-success flex items-center justify-center">
+                            <Check size={18} className="text-fixed-white" />
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Goal Detail Modal */}
@@ -875,6 +959,14 @@ export default function GoalsTab() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Share Achievement Modal */}
+      <ShareAchievementModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        achievement={achievementToShare}
+        onShare={handleShareSubmit}
+      />
     </div>
   )
 }

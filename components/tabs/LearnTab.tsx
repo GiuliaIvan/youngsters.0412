@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, CheckCircle, Lock, Star, Flame, Trophy, X, ChevronRight, Sparkles, Pause, Volume2, VolumeX, SkipForward, ChevronLeft, Clock, BookOpen, MessageCircle } from 'lucide-react'
+import { Play, CheckCircle, Lock, Star, Flame, Trophy, X, ChevronRight, Sparkles, Pause, Volume2, VolumeX, SkipForward, ChevronLeft, Clock, BookOpen, MessageCircle, Share2, Heart } from 'lucide-react'
 import Header from '../Header'
+import ShareAchievementModal, { Achievement } from '../share/ShareAchievementModal'
 
 interface Lesson {
   id: number
@@ -190,6 +191,10 @@ export default function LearnTab() {
   const [showVippsiChat, setShowVippsiChat] = useState(false)
   const carouselRef = useRef<HTMLDivElement>(null)
   
+  // Share achievement state
+  const [showShareModal, setShowShareModal] = useState(false)
+  const [achievementToShare, setAchievementToShare] = useState<Achievement | null>(null)
+  
   const completedLessons = lessons.filter(l => l.completed).length
   const totalXP = lessons.filter(l => l.completed).reduce((acc, l) => acc + l.xp, 0)
   const watchedVideos = videoLessons.filter(v => v.watched).length
@@ -295,6 +300,41 @@ export default function LearnTab() {
     setSelectedAnswer(null)
     setShowResult(false)
     setQuizCompleted(false)
+  }
+
+  // Share lesson completion
+  const handleShareLesson = (lesson: Lesson) => {
+    const achievement: Achievement = {
+      id: lesson.id,
+      type: 'lesson_completed',
+      title: lesson.title,
+      description: lesson.description,
+      emoji: lesson.emoji,
+      xp: lesson.xp,
+      date: 'Today',
+    }
+    setAchievementToShare(achievement)
+    setShowShareModal(true)
+  }
+
+  // Share video completion
+  const handleShareVideo = (video: VideoLesson) => {
+    const achievement: Achievement = {
+      id: video.id,
+      type: 'lesson_completed',
+      title: video.title,
+      description: video.description,
+      emoji: video.thumbnail,
+      xp: video.xp,
+      date: 'Today',
+    }
+    setAchievementToShare(achievement)
+    setShowShareModal(true)
+  }
+
+  const handleShareSubmit = (achievement: Achievement) => {
+    console.log('Shared achievement:', achievement)
+    // In a real app, this would send to the family feed
   }
 
   const currentQuestion = selectedLesson?.questions?.[currentQuestionIndex]
@@ -855,6 +895,14 @@ export default function LearnTab() {
               transition={{ delay: 0.7 }}
               className="w-full space-y-3"
             >
+              {/* Share Button */}
+              <button
+                onClick={() => selectedLesson && handleShareLesson(selectedLesson)}
+                className="w-full py-4 bg-gradient-to-r from-tint-primary to-tint-secondary text-fixed-white rounded-[12px] font-semibold text-[16px] flex items-center justify-center gap-2 shadow-lg"
+              >
+                <Heart size={20} />
+                Share with Family
+              </button>
               <button
                 onClick={closeQuiz}
                 className="w-full py-4 bg-tint-primary text-fixed-white rounded-[12px] font-semibold text-[16px] hover:opacity-90 transition-opacity"
@@ -863,7 +911,7 @@ export default function LearnTab() {
               </button>
               <button
                 onClick={startQuiz}
-                className="w-full py-4 surface-card text-tint-primary rounded-[12px] font-semibold text-[16px] hover:bg-gray-100 transition-colors"
+                className="w-full py-3 text-tint-primary font-medium text-[14px]"
               >
                 Try Again
               </button>
@@ -1284,6 +1332,14 @@ export default function LearnTab() {
                   transition={{ delay: 1 }}
                   className="w-full space-y-3"
                 >
+                  {/* Share Button */}
+                  <button
+                    onClick={() => selectedVideo && handleShareVideo(selectedVideo)}
+                    className="w-full py-4 bg-gradient-to-r from-tint-primary to-tint-secondary text-fixed-white rounded-[12px] font-semibold text-[16px] flex items-center justify-center gap-2 shadow-lg"
+                  >
+                    <Heart size={20} />
+                    Share with Family
+                  </button>
                   <button
                     onClick={() => {
                       closeVideoLesson()
@@ -1293,26 +1349,16 @@ export default function LearnTab() {
                         setSelectedLesson(matchingLesson)
                       }
                     }}
-                    className={`w-full py-4 rounded-[12px] font-semibold text-[16px] flex items-center justify-center gap-2 bg-gradient-to-r ${selectedVideo.gradient} text-white shadow-lg`}
+                    className={`w-full py-4 rounded-[12px] font-semibold text-[16px] flex items-center justify-center gap-2 bg-gradient-to-r ${selectedVideo.gradient} text-white`}
                   >
                     <Trophy size={20} />
                     Take the Quiz
                   </button>
                   <button
                     onClick={closeVideoLesson}
-                    className="w-full py-4 surface-card text-label-primary rounded-[12px] font-semibold text-[16px] hover:bg-gray-100 transition-colors"
+                    className="w-full py-3 text-label-primary font-medium text-[14px]"
                   >
                     Continue Learning
-                  </button>
-                  <button
-                    onClick={() => {
-                      setVideoViewState('playing')
-                      setVideoProgress(0)
-                      setIsPlaying(true)
-                    }}
-                    className="w-full py-3 text-tint-primary font-medium text-[14px]"
-                  >
-                    Watch Again
                   </button>
                 </motion.div>
               </motion.div>
@@ -1320,6 +1366,14 @@ export default function LearnTab() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Share Achievement Modal */}
+      <ShareAchievementModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        achievement={achievementToShare}
+        onShare={handleShareSubmit}
+      />
     </div>
   )
 }

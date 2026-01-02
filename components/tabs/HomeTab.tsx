@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   ArrowUpRight, 
@@ -9,9 +10,12 @@ import {
   ChevronRight,
   Sparkles,
   Plus,
-  Flame
+  Flame,
+  Coins,
+  Check
 } from 'lucide-react'
 import Header from '../Header'
+import ChoresEarnSection from '../earn/ChoresEarnSection'
 
 const transactions = [
   { id: 1, name: 'Corner Store - Snacks', amount: -35, date: 'Today', icon: '🍿', category: 'snacks' },
@@ -135,6 +139,17 @@ export default function HomeTab() {
               </div>
             </div>
           </div>
+        </motion.div>
+
+        {/* Earn Money Preview */}
+        <motion.div variants={itemVariants}>
+          <ChoresEarnSection 
+            compact={true} 
+            onNavigateToFull={() => {
+              // This would navigate to Goals tab - for now just log
+              console.log('Navigate to Goals > Earn')
+            }}
+          />
         </motion.div>
 
         {/* Goals Preview */}

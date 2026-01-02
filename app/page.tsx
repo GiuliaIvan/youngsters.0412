@@ -21,12 +21,12 @@ const tabs = {
 }
 
 const contextualTips: Record<string, string> = {
-  home: "Welcome back! Ready to save a little today? 💪",
-  goals: "Great that you're checking your goals! Remember: small steps lead to big leaps! 🚀",
+  home: "Welcome back! Check out your chores to earn some money! 💪",
+  goals: "Goals + Earn in one place! Complete chores to fund your dreams faster! 🚀",
   insights: "Let me show you how you spend your money - knowledge is power! 📊",
-  learn: "Learning makes you smarter with money! Ready for today's lesson? 📚",
+  learn: "Learning makes you smarter with money! Share your progress with family! 📚",
   rewards: "Wow, look at all your rewards! You're doing great! 🏆",
-  me: "Here you can customize everything. Make me even cooler! ✨",
+  me: "Check what you've shared with family and customize your profile! ✨",
 }
 
 export default function Home() {
