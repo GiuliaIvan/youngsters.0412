@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   User, 
@@ -12,10 +13,13 @@ import {
   LogOut,
   Moon,
   Globe,
-  Heart
+  Heart,
+  MessageCircle,
+  Users
 } from 'lucide-react'
 import Header from '../Header'
 import SharedWithFamilySection from '../share/SharedWithFamilySection'
+import FamilyChatPage from '../chat/FamilyChatPage'
 
 const stats = [
   { label: 'Total Saved', value: '3 450 kr', emoji: '💰' },
@@ -33,7 +37,18 @@ const menuItems = [
   { id: 'help', icon: HelpCircle, label: 'Help & Support', color: 'text-label-secondary' },
 ]
 
+const familyMembers = [
+  { id: 'mom', name: 'Mom', emoji: '👩', status: 'online', lastMessage: 'You\'re on fire! 🔥', unread: 0 },
+  { id: 'dad', name: 'Dad', emoji: '👨', status: 'offline', lastMessage: 'Great job Emma!', unread: 0 },
+]
+
 export default function MeTab() {
+  const [showChat, setShowChat] = useState<string | null>(null)
+  
+  if (showChat) {
+    return <FamilyChatPage onBack={() => setShowChat(null)} />
+  }
+  
   return (
     <div className="tab-content bg-background-primary">
       <Header title="Profile" showSettings={true} />
@@ -87,11 +102,66 @@ export default function MeTab() {
           ))}
         </motion.div>
 
-        {/* Shared With Family Section */}
+        {/* Family Members - Chat Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-medium text-label-primary text-[18px] tracking-[-0.45px] flex items-center gap-2">
+              <Users size={18} className="text-tint-secondary" />
+              Family
+            </h3>
+          </div>
+          
+          <div className="space-y-2">
+            {familyMembers.map((member, index) => (
+              <motion.button
+                key={member.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 + index * 0.05 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setShowChat(member.id)}
+                className="w-full surface-card p-4 flex items-center gap-3 hover:bg-gray-100 transition-colors"
+              >
+                <div className="relative">
+                  <div className="w-12 h-12 rounded-full bg-tint-secondary/10 flex items-center justify-center">
+                    <span className="text-2xl">{member.emoji}</span>
+                  </div>
+                  <div className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white ${
+                    member.status === 'online' ? 'bg-green-400' : 'bg-gray-300'
+                  }`} />
+                </div>
+                
+                <div className="flex-1 text-left">
+                  <div className="flex items-center gap-2">
+                    <p className="font-medium text-label-primary text-[16px]">{member.name}</p>
+                    {member.unread > 0 && (
+                      <span className="px-2 py-0.5 bg-tint-primary text-white text-[11px] font-semibold rounded-full">
+                        {member.unread}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[14px] text-label-secondary truncate">{member.lastMessage}</p>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-tint-primary/10 flex items-center justify-center">
+                    <MessageCircle size={18} className="text-tint-primary" />
+                  </div>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Shared With Family Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
         >
           <SharedWithFamilySection />
         </motion.div>
